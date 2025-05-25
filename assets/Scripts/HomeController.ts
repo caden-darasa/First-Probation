@@ -1,13 +1,4 @@
-// Learn TypeScript:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/typescript.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
-
+import AudioManager from "./AudioManager";
 import StaticData from "./StaticData";
 
 const { ccclass, property } = cc._decorator;
@@ -18,12 +9,24 @@ export default class HomeController extends cc.Component {
     @property(cc.Canvas)
     canvas: cc.Canvas = null;
 
+    @property(cc.Node)
+    settingsPopup: cc.Node = null;
+
     //#region Public methods
 
     public onPictureClick(event: cc.Event, customEventData: string): void {
         const levelId = parseInt(customEventData, 10);
         StaticData.CurrentLevel = levelId;
-        cc.director.loadScene("Game");
+        AudioManager.instance.playClickButton();
+        // cc.director.loadScene("Game");
+        this.scheduleOnce(() => {
+            cc.director.loadScene("Game");
+        }, 0.1);
+    }
+
+    public onSettingsClick(): void {
+        this.settingsPopup.active = true;
+        AudioManager.instance.playClickButton();
     }
 
     //#endregion

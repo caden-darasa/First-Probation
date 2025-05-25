@@ -1,13 +1,4 @@
-// Learn TypeScript:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/typescript.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
-
+import AudioManager from "./AudioManager";
 import Picture from "./Picture";
 import PlayerController from "./PlayerController";
 import StarPoint from "./StarPoint";
@@ -54,6 +45,9 @@ export default class GameManager extends cc.Component {
 
     @property(cc.Prefab)
     starPref: cc.Prefab = null;
+
+    @property({ type: cc.AudioClip })
+    bgClip: cc.AudioClip = null;
 
     private static _instance: GameManager = null;
     public static get instance(): GameManager {
@@ -113,7 +107,12 @@ export default class GameManager extends cc.Component {
     }
 
     public onHomeClick(): void {
-        cc.director.loadScene("Home");
+        AudioManager.instance.playClickButton();
+        AudioManager.instance.stopBgm();
+        // cc.director.loadScene("Home");
+        this.scheduleOnce(() => {
+            cc.director.loadScene("Home");
+        }, 0.1);
     }
 
     //#endregion
@@ -133,6 +132,7 @@ export default class GameManager extends cc.Component {
         this.canvas.fitHeight = fitHeight;
 
         this.initGame();
+        AudioManager.instance.playBgm(this.bgClip);
     }
 
     //#endregion
@@ -144,8 +144,6 @@ export default class GameManager extends cc.Component {
         if (StaticData.CurrentLevel >= this.MAX_LEVEL) {
             StaticData.CurrentLevel = 0;
         }
-        console.log("CurrentLevel:", StaticData.CurrentLevel);
-        console.log("Prefab at that index:", this.pictures[StaticData.CurrentLevel]);
         const level: cc.Node = cc.instantiate(this.pictures[StaticData.CurrentLevel]);
         this.playerController.node.addChild(level);
         level.setPosition(cc.v2(0, 0));
