@@ -5,18 +5,18 @@ const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class PlayerController extends cc.Component {
-    private _leftPic: cc.Node = null;
-    private _rightPic: cc.Node = null;
-    private _leftDifPoints: cc.Node[] = [];
-    private _rightDifPoints: cc.Node[] = [];
+    private leftPic: cc.Node = null;
+    private rightPic: cc.Node = null;
+    private leftDifPoints: cc.Node[] = [];
+    private rightDifPoints: cc.Node[] = [];
 
     //#region Public methods
 
     setLevel(leftPic: cc.Node, rightPic: cc.Node, leftDifPoints: cc.Node[], rightDifPoints: cc.Node[]): void {
-        this._leftPic = leftPic;
-        this._rightPic = rightPic;
-        this._leftDifPoints = leftDifPoints;
-        this._rightDifPoints = rightDifPoints;
+        this.leftPic = leftPic;
+        this.rightPic = rightPic;
+        this.leftDifPoints = leftDifPoints;
+        this.rightDifPoints = rightDifPoints;
         GameManager.instance.endGame = false;
     }
 
@@ -38,21 +38,21 @@ export default class PlayerController extends cc.Component {
 
         const touchPos: cc.Vec2 = event.getLocation();
 
-        if (this.isInsideImage(touchPos, this._leftPic)
-            || this.isInsideImage(touchPos, this._rightPic)) {
+        if (this.isInsideImage(touchPos, this.leftPic)
+            || this.isInsideImage(touchPos, this.rightPic)) {
             let difId: number = -1;
             const canvasPos = ExtentionMethods.toCanvasPosition(touchPos);
 
-            for (let i = 0; i < this._leftDifPoints.length; i++) {
-                if (this.hitDifference(this._leftDifPoints[i], touchPos)) {
+            for (let i = 0; i < this.leftDifPoints.length; i++) {
+                if (this.hitDifference(this.leftDifPoints[i], touchPos)) {
                     difId = i;
                     break;
                 }
             }
 
             if (difId < 0) {
-                for (let i = 0; i < this._rightDifPoints.length; i++) {
-                    if (this.hitDifference(this._rightDifPoints[i], touchPos)) {
+                for (let i = 0; i < this.rightDifPoints.length; i++) {
+                    if (this.hitDifference(this.rightDifPoints[i], touchPos)) {
                         difId = i;
                         break;
                     }

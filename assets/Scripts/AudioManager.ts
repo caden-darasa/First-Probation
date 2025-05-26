@@ -15,40 +15,41 @@ export default class AudioManager extends cc.Component {
     @property({ type: cc.AudioClip })
     clickButton: cc.AudioClip = null;
 
-    private _bgmVolume: number = 1;
-    private _sfxVolume: number = 1;
+    private bgmVolume: number = 1;
+    private sfxVolume: number = 1;
+    private sfxId: number = 0;
 
     //#region Public methods
 
-    public stopBgm(): void {
-        this.bgMusic.stop();
-    }
-
     public playBgm(clip: cc.AudioClip): void {
         this.bgMusic.clip = clip;
-        this.bgMusic.volume = this._bgmVolume;
+        this.bgMusic.volume = this.bgmVolume;
         this.bgMusic.play();
     }
 
     public playSfx(clip: cc.AudioClip): void {
-        for (let i = 0; i < this.soundEffects.length; i++) {
-            if (!this.soundEffects[i].isPlaying) {
-                this.soundEffects[i].clip = clip;
-                this.soundEffects[i].volume = this._sfxVolume;
-                this.soundEffects[i].play();
-                break;
-            }
-        }
+        if (this.sfxId >= this.soundEffects.length)
+            this.sfxId = 0;
+
+        const source = this.soundEffects[this.sfxId];
+
+        if (source.isPlaying)
+            source.stop();
+
+        source.clip = clip;
+        source.volume = this.sfxVolume;
+        source.play();
+        this.sfxId++;
     }
 
     public setBgmVolume(volume: number): void {
-        this._bgmVolume = volume;
+        this.bgmVolume = volume;
         this.bgMusic.volume = volume;
         cc.sys.localStorage.setItem(this.BGM_VOLUME, volume);
     }
 
     public setSfxVolume(volume: number): void {
-        this._sfxVolume = volume;
+        this.sfxVolume = volume;
         for (let i = 0; i < this.soundEffects.length; i++) {
             this.soundEffects[i].volume = volume;
         }
@@ -56,11 +57,11 @@ export default class AudioManager extends cc.Component {
     }
 
     public getBgmVolume(): number {
-        return this._bgmVolume;
+        return this.bgmVolume;
     }
 
     public getSfxVolume(): number {
-        return this._sfxVolume;
+        return this.sfxVolume;
     }
 
     public playClickButton(): void {
@@ -82,10 +83,11 @@ export default class AudioManager extends cc.Component {
     }
 
     start(): void {
-        this._bgmVolume = cc.sys.localStorage.getItem(this.BGM_VOLUME) || 1;
-        this._sfxVolume = cc.sys.localStorage.getItem(this.SOUND_VOLUME) || 1;
-        this.setBgmVolume(this._bgmVolume);
-        this.setSfxVolume(this._sfxVolume);
+        this.bgmVolume = cc.sys.localStorage.getItem(this.BGM_VOLUME) || 1;
+        this.sfxVolume = cc.sys.localStorage.getItem(this.SOUND_VOLUME) || 1;
+        this.setBgmVolume(this.bgmVolume);
+        this.setSfxVolume(this.sfxVolume);
+        // this.bgMusic.play();
     }
 
     //#endregion

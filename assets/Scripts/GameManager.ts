@@ -11,7 +11,6 @@ const { ccclass, property } = cc._decorator;
 @ccclass
 export default class GameManager extends cc.Component {
     private readonly KEY_WRONG: string = "wrongEffect";
-    private readonly MAX_LEVEL: number = 3;
 
     @property(cc.Canvas)
     canvas: cc.Canvas = null;
@@ -46,17 +45,23 @@ export default class GameManager extends cc.Component {
     @property(cc.Prefab)
     starPref: cc.Prefab = null;
 
+    @property(cc.Node)
+    settingsPopup: cc.Node = null;
+
     @property({ type: cc.AudioClip })
-    bgClip: cc.AudioClip = null;
+    wrongClip: cc.AudioClip = null;
+
+    @property({ type: cc.AudioClip })
+    correctClip: cc.AudioClip = null;
 
     private static _instance: GameManager = null;
     public static get instance(): GameManager {
         return this._instance;
     }
 
-    private _ids: number[] = [];
-    private _curPic: Picture = null;
-    private _starSpawns: StarPoint[] = [];
+    private ids: number[] = [];
+    private curPic: Picture = null;
+    private starSpawns: StarPoint[] = [];
 
     //#region Properties
 
@@ -72,34 +77,36 @@ export default class GameManager extends cc.Component {
         let anim = wrongFx.getComponent(cc.Animation);
         anim.stop();
         anim.play("wrong-fx");
+        AudioManager.instance.playSfx(this.wrongClip);
     }
 
     public correctTouch(id: number, pos: cc.Vec3): void {
-        if (!this._ids.includes(id)) {
+        if (!this.ids.includes(id)) {
             // Show green circle in 2 different points
             const leftFx = cc.instantiate(this.rightEffectPref) as cc.Node;
             const rightFx = cc.instantiate(this.rightEffectPref) as cc.Node;
-            this._curPic.showCompletePoint(id, leftFx, rightFx);
+            this.curPic.showCompletePoint(id, leftFx, rightFx);
 
             // Play star effect
+            AudioManager.instance.playSfx(this.correctClip);
             const starFx = cc.instantiate(this.starEffectPref) as cc.Node;
             this.effectContainer.addChild(starFx);
             starFx.setPosition(pos);
-            let curId = this._ids.length;
-            let toPos = ExtentionMethods.toLocalPosition(this._starSpawns[curId].node, this.effectContainer);
+            let curId = this.ids.length;
+            let toPos = ExtentionMethods.toLocalPosition(this.starSpawns[curId].node, this.effectContainer);
             cc.tween(starFx)
                 .to(0.5, { position: toPos })
                 .call(() => {
-                    this._starSpawns[curId].runEffect();
+                    this.starSpawns[curId].runEffect();
                     starFx.destroy();
                 })
                 .start();
 
             // Add complete id
-            this._ids.push(id);
+            this.ids.push(id);
 
             // Check game end
-            if (this._ids.length >= this._curPic.leftDifPoints.length) {
+            if (this.ids.length >= this.curPic.leftDifPoints.length) {
                 this.endGamePopup.active = true;
                 this.endGame = true;
             }
@@ -107,12 +114,21 @@ export default class GameManager extends cc.Component {
     }
 
     public onHomeClick(): void {
+        if (this.endGame)
+            return;
+
         AudioManager.instance.playClickButton();
-        AudioManager.instance.stopBgm();
-        // cc.director.loadScene("Home");
         this.scheduleOnce(() => {
             cc.director.loadScene("Home");
-        }, 0.1);
+        }, 0.2);
+    }
+
+    public onSettingsClick(): void {
+        if (this.endGame)
+            return;
+
+        this.settingsPopup.active = true;
+        AudioManager.instance.playClickButton();
     }
 
     //#endregion
@@ -132,7 +148,6 @@ export default class GameManager extends cc.Component {
         this.canvas.fitHeight = fitHeight;
 
         this.initGame();
-        AudioManager.instance.playBgm(this.bgClip);
     }
 
     //#endregion
@@ -141,26 +156,26 @@ export default class GameManager extends cc.Component {
 
     private initGame(): void {
         // Initialize level
-        if (StaticData.CurrentLevel >= this.MAX_LEVEL) {
+        if (StaticData.CurrentLevel >= this.pictures.length) {
             StaticData.CurrentLevel = 0;
         }
         const level: cc.Node = cc.instantiate(this.pictures[StaticData.CurrentLevel]);
         this.playerController.node.addChild(level);
         level.setPosition(cc.v2(0, 0));
-        this._curPic = level.getComponent(Picture);
+        this.curPic = level.getComponent(Picture);
         this.playerController.setLevel(
-            this._curPic.leftPic,
-            this._curPic.rightPic,
-            this._curPic.leftDifPoints,
-            this._curPic.rightDifPoints
+            this.curPic.leftPic,
+            this.curPic.rightPic,
+            this.curPic.leftDifPoints,
+            this.curPic.rightDifPoints
         );
 
         // Initialize stars
-        let amount = this._curPic.leftDifPoints.length;
+        let amount = this.curPic.leftDifPoints.length;
         for (let i = 0; i < amount; i++) {
             let star = cc.instantiate(this.starPref) as cc.Node;
             this.starContainer.addChild(star);
-            this._starSpawns.push(star.getComponent(StarPoint));
+            this.starSpawns.push(star.getComponent(StarPoint));
         }
     }
 

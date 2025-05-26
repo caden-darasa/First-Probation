@@ -19,7 +19,9 @@ export default class EndGamePopup extends cc.Component {
     public onNextClick(): void {
         StaticData.CurrentLevel++;
         AudioManager.instance.playClickButton();
-        cc.director.loadScene("Game");
+        this.scheduleOnce(() => {
+            cc.director.loadScene("Game");
+        }, 0.2);
     }
 
     //#endregion

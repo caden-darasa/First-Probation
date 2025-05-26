@@ -9,24 +9,15 @@ export default class HomeController extends cc.Component {
     @property(cc.Canvas)
     canvas: cc.Canvas = null;
 
-    @property(cc.Node)
-    settingsPopup: cc.Node = null;
-
     //#region Public methods
 
     public onPictureClick(event: cc.Event, customEventData: string): void {
         const levelId = parseInt(customEventData, 10);
         StaticData.CurrentLevel = levelId;
         AudioManager.instance.playClickButton();
-        // cc.director.loadScene("Game");
         this.scheduleOnce(() => {
             cc.director.loadScene("Game");
-        }, 0.1);
-    }
-
-    public onSettingsClick(): void {
-        this.settingsPopup.active = true;
-        AudioManager.instance.playClickButton();
+        }, 0.2);
     }
 
     //#endregion
