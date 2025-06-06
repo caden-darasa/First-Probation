@@ -99,7 +99,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1920,
-      "height": 1280
+      "height": 1080
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -109,7 +109,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "x": 960,
-      "y": 640,
+      "y": 540,
       "z": 0
     },
     "_scale": {
@@ -168,7 +168,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 1108.5125168440816
+      "z": 935.3074360871938
     },
     "_scale": {
       "__type__": "cc.Vec3",
@@ -253,7 +253,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1920,
-      "height": 1280
+      "height": 1080
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -386,7 +386,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 510.6,
+      "y": 449.6,
       "z": 0
     },
     "_scale": {
@@ -450,7 +450,7 @@
     "_alignFlags": 1,
     "_left": 0,
     "_right": 0,
-    "_top": 79,
+    "_top": 40,
     "_bottom": 0,
     "_verticalCenter": 0,
     "_horizontalCenter": 0,
@@ -514,7 +514,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1920,
-      "height": 1280
+      "height": 1080
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -612,7 +612,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1920,
-      "height": 1280
+      "height": 1080
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -677,7 +677,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1920,
-      "height": 1280
+      "height": 1080
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -775,7 +775,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 11424,
-      "height": 1280
+      "height": 1080
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1436,7 +1436,7 @@
     "_designResolution": {
       "__type__": "cc.Size",
       "width": 1920,
-      "height": 1280
+      "height": 1080
     },
     "_fitWidth": false,
     "_fitHeight": true,
@@ -7936,7 +7936,7 @@
     "_layoutSize": {
       "__type__": "cc.Size",
       "width": 11424,
-      "height": 1280
+      "height": 1080
     },
     "_resize": 1,
     "_N$layoutType": 1,
