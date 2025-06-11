@@ -6,7 +6,7 @@ const { ccclass, property } = cc._decorator;
 @ccclass
 export default class SnapScrollView extends cc.Component {
     private readonly CANVAS_WIDTH: number = 1920; // Width of the canvas
-    private readonly FAST_SCROLL_DISTANCE: number = 400;
+    private readonly FAST_SCROLL_DISTANCE: number = 600;
     private readonly FAST_SCROLL_TIME: number = 20;
     private readonly SPEED_LERP: number = 10; // Speed of the lerp effect
 
