@@ -12,14 +12,12 @@ export default class HomeController extends cc.Component {
     //#region Public methods
 
     public onPictureClick(event: cc.Event, customEventData: string): void {
-        console.log(cc.director.getScene());
-        cc.director.loadScene("Game");
-        // const levelId = parseInt(customEventData, 10);
-        // StaticData.CurrentLevel = levelId;
-        // AudioManager.instance.playClickButton();
-        // this.scheduleOnce(() => {
-        //     cc.director.loadScene("Game");
-        // }, 0.2);
+        const levelId = parseInt(customEventData, 10);
+        StaticData.CurrentLevel = levelId;
+        AudioManager.instance.playClickButton();
+        this.scheduleOnce(() => {
+            cc.director.loadScene("Game");
+        }, 0.2);
     }
 
     //#endregion

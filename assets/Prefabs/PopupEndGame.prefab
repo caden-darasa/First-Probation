@@ -28,7 +28,7 @@
       }
     ],
     "_active": true,
-    "_level": 1,
+    "_level": 2,
     "_components": [
       {
         "__id__": 29
@@ -60,8 +60,8 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 960,
-      "y": 540,
+      "x": 0,
+      "y": 0,
       "z": 0
     },
     "_scale": {
@@ -365,7 +365,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "a3269de8-4c47-4516-9e63-5e1776c6668b"
+      "__uuid__": "a23235d1-15db-4b95-8439-a2e005bfff91"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -392,10 +392,10 @@
     "alignMode": 1,
     "_target": null,
     "_alignFlags": 45,
-    "_left": -200,
-    "_right": -200,
-    "_top": -200,
-    "_bottom": -200,
+    "_left": 0,
+    "_right": 0,
+    "_top": 0,
+    "_bottom": 0,
     "_verticalCenter": 0,
     "_horizontalCenter": 0,
     "_isAbsLeft": true,
@@ -622,7 +622,7 @@
       "__id__": 10
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_level": 4,
     "_components": [
       {
@@ -676,7 +676,7 @@
   },
   {
     "__type__": "cc.Label",
-    "_name": "",
+    "_name": "Noti<Label>",
     "_objFlags": 0,
     "node": {
       "__id__": 15
@@ -788,7 +788,7 @@
     },
     "_children": [],
     "_active": true,
-    "_level": 5,
+    "_level": 2,
     "_components": [
       {
         "__id__": 20
@@ -844,7 +844,7 @@
   },
   {
     "__type__": "cc.Sprite",
-    "_name": "",
+    "_name": "Background<Sprite>",
     "_objFlags": 0,
     "node": {
       "__id__": 19
@@ -858,7 +858,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "de289a4d-558d-4a47-b3f2-c50e68c0372f"
+      "__uuid__": "de9ccd46-d9df-4e83-93f1-01cfc5b5393e"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -1017,7 +1017,7 @@
   },
   {
     "__type__": "cc.Sprite",
-    "_name": "",
+    "_name": "Popup<Sprite>",
     "_objFlags": 0,
     "node": {
       "__id__": 10
